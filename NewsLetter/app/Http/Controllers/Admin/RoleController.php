@@ -19,7 +19,7 @@ class RoleController extends Controller
        
         $role->delete();
 
-        return redirect()->route('roles.index')->with('success', 'Role deleted successfully');
+        return redirect()->route('admin.roles.index')->with('success', 'Role deleted successfully');
     }
 
 
@@ -28,13 +28,14 @@ class RoleController extends Controller
         return view('admin.roles.create');
     }
 
+   
     public function store(Request $request)
-    {
-        $validated = $request->validate(['name' => ['required', 'min:3']]);
-        Role::create($validated);
+{
+    $validated = $request->validate(['name' => ['required', 'min:3']]);
+    Role::create($validated);
 
-        return to_route('admin.roles.index')->with('message', 'Role Created successfully.');
-    }
+    return redirect()->route('admin.roles.index')->with('success', 'Role Created successfully.');
+}
 
 
     

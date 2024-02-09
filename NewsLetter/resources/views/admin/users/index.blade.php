@@ -1,11 +1,12 @@
-<x-admin-layout>
+<x-admin-layout class=" dark:bg-gray-700">
 
 
     <div class="py-12 w-full">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg ">
                 <div class="flex justify-end p-2">
-                    <a href="" class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md">Create</a>
+                    <a href="{{ route('admin.users.create') }}"
+                        class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md">Create User</a>
                 </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div
@@ -93,16 +94,14 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            
-                                                @if ($user->roles)
+
+                                            @if ($user->roles)
                                                 @foreach ($user->roles as $user_role)
-                                                   
-                                                   |     <button >{{ $user_role->name }}</button> |
-                                                    
+                                                    | <button>{{ $user_role->name }}</button> |
                                                 @endforeach
                                             @endif
-                                            
-                                            
+
+
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
@@ -147,4 +146,20 @@
             </div>
         </div>
     </div>
+    <script src="path/to/sweetalert2.js"></script>
+    <script>
+        // Check if there's a success message in the session
+        let successMessage = "{{ session('success') }}";
+
+        if (successMessage) {
+            // Display SweetAlert popup with success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: successMessage,
+                showConfirmButton: false,
+                timer: 1500 // milliseconds
+            });
+        }
+    </script>
 </x-admin-layout>

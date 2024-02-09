@@ -133,4 +133,20 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        // Check if there's a success message in the session
+        let successMessage = "{{ session('success') }}";
+
+        if (successMessage) {
+            // Display SweetAlert popup with success message
+            Swal.fire({
+                icon: 'success',
+                title: 'Success!',
+                text: successMessage,
+                showConfirmButton: false,
+                timer: 1500 // milliseconds
+            });
+        }
+    </script>
 </x-admin-layout>
