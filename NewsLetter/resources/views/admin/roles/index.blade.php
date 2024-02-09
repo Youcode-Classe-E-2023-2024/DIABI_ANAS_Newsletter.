@@ -5,8 +5,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg ">
                 <div class="flex justify-end p-2">
-                    <a href="" class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md">Create</a>
-                </div>
+                    <a href="{{ route('admin.roles.create') }}" class="px-4 py-2 bg-green-700 hover:bg-green-500 rounded-md">Create Role</a>                </div>
                 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <div
                         class="flex items-center justify-between flex-column md:flex-row flex-wrap space-y-4 md:space-y-0 py-4 bg-white dark:bg-gray-900">
@@ -89,9 +88,12 @@
                                 </td>
                                 <td class="px-6 justify-end py-4">
                                     <!-- Modal toggle -->
-                                     <a href="" type="button" data-modal-target="editUserModal"
-                                        data-modal-show="editUserModal"
-                                        class="font-medium  text-red-600 dark:text-red-500 hover:underline p-2">Delete</a>
+                                    <form method="POST" action="{{ route('roles.destroy', $role) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="font-medium  text-red-600 dark:text-red-500 hover:underline p-2" type="submit">Delete</button>
+                                    </form>
+                                     
                                 </td>
                             </tr>
                             @endforeach

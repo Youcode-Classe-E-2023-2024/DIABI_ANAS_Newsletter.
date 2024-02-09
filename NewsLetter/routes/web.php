@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Admin\IndexController;
-use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
@@ -32,12 +31,20 @@ Route::middleware([
 });
 
 
-Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->group(function(){
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::resource('roles', RoleController::class);
-    Route::resource('/permissions', PermissionController::class);
-    Route::resource('/users', UserController::class);
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users/{user}/roles/{role}', [UserController::class, 'assignRole'])->name('users.roles');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::delete('/users/{user}/roles/{role}', [UserController::class, 'removeRole'])->name('users.roles.remove');
+    Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles');
+
+
+
 });
+
+ Route::delete('/roles/{role}', 'RoleController@destroy')->name('roles.destroy');
 
 
 
