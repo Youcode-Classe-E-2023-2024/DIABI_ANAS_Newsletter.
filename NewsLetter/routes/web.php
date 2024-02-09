@@ -34,18 +34,20 @@ Route::middleware([
 Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->group(function(){
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::resource('roles', RoleController::class);
+    Route::resource('users', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::get('/users/create', function () {
+        return view('admin.users.create');
+    })->name('users.create'); // Moved inside the group
     Route::post('/users/{user}/roles/{role}', [UserController::class, 'assignRole'])->name('users.roles');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
     Route::delete('/users/{user}/roles/{role}', [UserController::class, 'removeRole'])->name('users.roles.remove');
     Route::post('/users/{user}/roles', [UserController::class, 'assignRole'])->name('users.roles');
-
-
-
 });
 
- Route::delete('/roles/{role}', 'RoleController@destroy')->name('roles.destroy');
 
+Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 
 

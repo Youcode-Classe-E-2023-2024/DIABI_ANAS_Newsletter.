@@ -15,13 +15,12 @@
                     <div class="flex space-x-2 mt-4 p-2">
                         @if ($user->roles)
                             @foreach ($user->roles as $user_role)
-                                <form class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md" method="POST"
-                                    action="{{ route('admin.users.roles.remove', [$user->id, $user_role->id]) }}"
-                                    onsubmit="return confirm('Are you sure?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit">{{ $user_role->name }}</button>
-                                </form>
+                            <form id="removeUserRoleForm" class="px-4 py-2 bg-red-500 hover:bg-red-700 text-white rounded-md"
+                            method="POST" action="{{ route('admin.users.roles.remove', [$user->id, $user_role->id]) }}">
+                            @csrf
+                            @method('DELETE')
+                            <button type="button" onclick="confirmRemoveUserRole('{{ $user_role->name }}')">{{ $user_role->name }}</button>
+                        </form>
                             @endforeach
                         @endif
                     </div>
@@ -91,4 +90,24 @@
         </div>
     </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    function confirmRemoveUserRole(roleName) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You are about to remove the role: " + roleName,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, remove it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // If confirmed, submit the form
+                document.getElementById('removeUserRoleForm').submit();
+            }
+        });
+    }
+</script>
 </x-admin-layout>
