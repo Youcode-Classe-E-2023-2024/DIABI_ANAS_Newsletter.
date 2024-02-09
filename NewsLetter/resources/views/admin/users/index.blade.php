@@ -93,15 +93,22 @@
                                     </td>
                                     <td class="px-6 py-4">
                                         <div class="flex items-center">
-                                            <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div>
+                                            
+                                                @if ($user->roles)
+                                                @foreach ($user->roles as $user_role)
+                                                   
+                                                   |     <button >{{ $user_role->name }}</button> |
+                                                    
+                                                @endforeach
+                                            @endif
+                                            
                                             
                                         </div>
                                     </td>
                                     <td class="px-6 py-4">
                                         <!-- Modal toggle -->
-                                        <a href="#" type="button" data-modal-target="editUserModal"
-                                            data-modal-show="editUserModal"
-                                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Change Role</a>
+                                        <a href="{{ route('admin.users.show', $user->id) }}"
+                                            class="px-4 py-2 bg-blue-500 hover:bg-blue-700 text-white rounded-md">Roles</a>
                                     </td>
                                 </tr>
                             @endforeach
