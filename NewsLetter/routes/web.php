@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,6 +50,6 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
 
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
-
-
+Route::get('/newsletter',[NewsletterController::class, 'index'] )->name('newsletter');
+Route::post('/subscribe',[NewsletterController::class, 'subscribe'] )->name('subscribe');
 
