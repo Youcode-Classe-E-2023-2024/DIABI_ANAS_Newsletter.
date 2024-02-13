@@ -25,10 +25,10 @@ class EmailOwnerAboutSubscription
      */
     public function handle(UserSubscribed $event)
     {
-        DB::table('emaillists')->insert([
+        DB::table('newsletter')->insert([
             'email' => $event->email
         ]);
 
-        mail::to($event->email)->send(new UserSubscribedMessage);
+        Mail::to($event->email)->send(new UserSubscribedMessage());
     }
 }

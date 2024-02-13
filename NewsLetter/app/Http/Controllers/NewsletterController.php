@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Events\UserSubscribed;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Newsletter;
 
 class NewsletterController extends Controller
 {
@@ -11,15 +12,29 @@ class NewsletterController extends Controller
     {
         return view('newsletter');
     }
+
     public function subscribe(Request $request)
     {
-        $request->validate([
-        'email' => 'required|unique:newsltter,email'
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|unique:newsletter,email',
+        ], [
+            'email.unique' => 'This email is already subscribed.', // Custom error message
         ]);
 
-        event(new UserSubscribed($request->input('email')));
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => $validator->errors()->first(),
+            ]);
+        }
 
-        return back();
+        Newsletter::create([
+            'email' => $request->email,
+        ]);
 
+        return response()->json([
+            'status' => 'success',
+            'message' => 'You have been successfully subscribed!',
+        ]);
     }
 }

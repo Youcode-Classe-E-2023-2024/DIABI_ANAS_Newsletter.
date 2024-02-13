@@ -32,7 +32,7 @@ Route::middleware([
 });
 
 
-Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function(){
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
@@ -51,5 +51,5 @@ Route::middleware(['auth', 'role:Admin'])->name('admin.')->prefix('admin')->grou
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
 
 Route::get('/newsletter',[NewsletterController::class, 'index'] )->name('newsletter');
-Route::post('/subscribe',[NewsletterController::class, 'subscribe'] )->name('subscribe');
-
+// Route::post('/subscribe',[NewsletterController::class, 'subscribe'] )->name('subscribe');
+Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');

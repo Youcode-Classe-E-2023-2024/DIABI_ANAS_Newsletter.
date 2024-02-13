@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('newsletter',function(Blueprint $table){
-            $table->id();
-            $table->string('email');
-            $table->tinyTntiger('status');
-            $table->timestamps();
+        Schema::table('newsletter', function (Blueprint $table) {
+            //
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::table('newsletter', function (Blueprint $table) {
+            //
+        });
     }
 };
