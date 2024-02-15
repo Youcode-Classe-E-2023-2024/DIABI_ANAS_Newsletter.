@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\UserSubscribed;
 use App\Listeners\EmailOwnerAboutSubscription;
 use App\Mail\UserSubscribedMessage;
 use Illuminate\Auth\Events\Registered;
@@ -20,9 +21,10 @@ class EventServiceProvider extends ServiceProvider
             Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-            UserSubscribedMessage::class => [
-            EmailOwnerAboutSubscription::class
-        ]
+        UserSubscribed::class => [
+            EmailOwnerAboutSubscription::class,
+
+        ]  
     ];
 
     /**

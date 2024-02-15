@@ -1,3 +1,3 @@
 <h1>
-    User Has subscribed
+    you have subscribed
 </h1>
