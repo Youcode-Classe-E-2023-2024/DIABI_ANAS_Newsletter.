@@ -1,7 +1,4 @@
-<x-main>
-    <x-admin-layout class=" dark:bg-gray-700">
-
-
+<x-admin-layout class="dark:bg-gray-700">
     <div class="max-w-6xl mx-auto mt-8">
         <a href="{{ route('posts.create') }}" class="px-4 py-2 text-white bg-indigo-500 rounded">Create</a>
         <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -55,11 +52,8 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @endforeach-
-
-                            <!-- More items... -->
+                            @endforeach
                         </tbody>
-
                     </table>
                     <div class="mt-4 ">
                         {{ $posts->links() }}
@@ -68,5 +62,4 @@
             </div>
         </div>
     </div>
-</x-main>
 </x-admin-layout>

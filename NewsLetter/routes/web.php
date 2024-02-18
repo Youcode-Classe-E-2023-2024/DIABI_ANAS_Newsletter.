@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\SubsController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
@@ -36,12 +37,13 @@ Route::middleware([
 });
 
 
-Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function(){
+Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::resource('users', UserController::class);
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/subscribers', [SubsController::class, 'index'])->name('subscribers.index');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/create', function () {
         return view('admin.users.create');
@@ -56,12 +58,15 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
     Route::post('/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('roles.permissions');
     Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+
 });
+Route::post('/send-newsletter', [NewsletterController::class, 'sendNewsletter'])->name('send-newsletter');
 
 
 Route::delete('/roles/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
+Route::delete('/Subs/{Sub}', [RoleController::class, 'destroy'])->name('Subs.destroy');
 
-Route::get('/newsletter',[NewsletterController::class, 'index'] )->name('newsletter');
+Route::get('/newsletter', [NewsletterController::class, 'index'])->name('newsletter');
 // Route::post('/subscribe',[NewsletterController::class, 'subscribe'] )->name('subscribe');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');
 
