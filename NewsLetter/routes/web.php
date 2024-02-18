@@ -5,8 +5,10 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\PdfController;
 use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\NewsletterController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Editor\MediaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,7 +55,7 @@ Route::middleware(['auth', 'role:admin'])->name('admin.')->prefix('admin')->grou
     Route::post('/users/{user}/permissions', [UserController::class, 'givePermission'])->name('users.permissions');
     Route::delete('/users/{user}/permissions/{permission}', [UserController::class, 'revokePermission'])->name('users.permissions.revoke');
     Route::post('/roles/{role}/permissions', [RoleController::class, 'givePermission'])->name('roles.permissions');
-    
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 });
 
 
@@ -63,6 +65,8 @@ Route::get('/newsletter',[NewsletterController::class, 'index'] )->name('newslet
 // Route::post('/subscribe',[NewsletterController::class, 'subscribe'] )->name('subscribe');
 Route::post('/subscribe', [NewsletterController::class, 'subscribe'])->name('subscribe');
 
-
+Route::match(['get', 'post'], '/media', [MediaController::class, 'media'])->name('media');
 
 Route::get('/generate-pdf', [PdfController::class, 'generatepdf'])->name('generate-pdf');
+
+Route::resource('/posts', PostController::class);
